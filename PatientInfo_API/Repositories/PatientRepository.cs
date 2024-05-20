@@ -2,54 +2,66 @@
 using PatientInfo_API.Data;
 using PatientInfo_API.Models;
 using PatientInfo_API.Services;
+using PatientInformationsAPI.Model;
 
 namespace PatientInfo_API.Repositories
 {
-    public class PatientRepository : IPatientService
-    {
-        private readonly AppDbContext _context;
 
-        public PatientRepository(AppDbContext context)
+        public class PatientRepository : IPatientService
         {
-            _context = context;
+        private readonly AppDbContext _patientInformationContext;
+
+        public PatientRepository(AppDbContext patientInformationContext)
+        {
+            _patientInformationContext = patientInformationContext;
         }
 
-        public async Task<IEnumerable<Patient>> GetAllPatientsAsync()
+        public async Task<List<Patient>> PatientInformationDetails()
         {
-            return await _context.Patients
-                .Include(p => p.NDC_Details)
-                .Include(p => p.Allergy_Details)
-                .ToListAsync();
+            var details = _patientInformationContext.PatientInformations.Include(x => x.Disease)
+                .Include(x => x.NcdDetails).Include(x => x.AllergiesDetails).ToList();
+            return details;
         }
 
-        public async Task<Patient> GetPatientByIdAsync(int id)
+        public async Task<string> PostPatientInformationDetails(PatientInformationView patientInformation)
         {
-            return await _context.Patients
-                .Include(p => p.NDC_Details)
-                .Include(p => p.Allergy_Details)
-                .FirstOrDefaultAsync(p => p.PatientId == id);
-        }
+            Patient information = new Patient();
+            information.Epliepsy = patientInformation.Epilepsy.HasFlag(Models.Enums.Epilepsy.Yes);
+            information.DiseaseId = patientInformation.DiseaseInformation.Id;
+            information.Name = patientInformation.Name;
+            information.ModifierDate = DateTime.Now;
+            information.CreationDate = DateTime.Now;
+            information.IsActve = true;
+            information.Id = Guid.NewGuid().ToString();
+            _patientInformationContext.PatientInformations.Add(information);
 
-        public async Task AddPatientAsync(Patient patient)
-        {
-            _context.Patients.Add(patient);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdatePatientAsync(Patient patient)
-        {
-            _context.Patients.Update(patient);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeletePatientAsync(int id)
-        {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient != null)
+            foreach (var item in patientInformation.SelectedNCDs)
             {
-                _context.Patients.Remove(patient);
-                await _context.SaveChangesAsync();
+                _patientInformationContext.NcdDetails.Add(new NDC_Detail()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Ncdid = item.Id,
+                    PatientId = information.Id,
+                    CreationDate = DateTime.Now,
+                    ModifierDate = DateTime.Now
+                });
             }
+            foreach (var item in patientInformation.SelectedAllergies)
+            {
+                _patientInformationContext.AllergiesDetails.Add(new Allergy_Detail()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    AllergieId = item.Id,
+                    PatientId = information.Id,
+                    CreationDate = DateTime.Now,
+                    ModifierDate = DateTime.Now
+                });
+            }
+            _patientInformationContext.SaveChanges();
+
+            return "Object created";
         }
+
+
     }
 }

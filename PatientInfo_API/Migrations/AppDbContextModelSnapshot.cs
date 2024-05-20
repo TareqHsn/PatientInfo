@@ -24,152 +24,232 @@ namespace PatientInfo_API.Migrations
 
             modelBuilder.Entity("PatientInfo_API.Models.Allergy", b =>
                 {
-                    b.Property<int>("AllergyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AllergyId"));
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime");
 
-                    b.Property<string>("AllergyName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Details")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("AllergyId");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifierDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Allergies");
                 });
 
             modelBuilder.Entity("PatientInfo_API.Models.Allergy_Detail", b =>
                 {
-                    b.Property<int>("Allergy_DetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Allergy_DetailId"));
+                    b.Property<string>("AllergieId")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("AllergyId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime");
 
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("ModifierDate")
+                        .HasColumnType("datetime");
 
-                    b.HasKey("Allergy_DetailId");
+                    b.Property<string>("PatientId")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasIndex("AllergyId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AllergieId");
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Allergy_Details");
+                    b.ToTable("Allergies_Details", (string)null);
                 });
 
             modelBuilder.Entity("PatientInfo_API.Models.DiseaseInfo", b =>
                 {
-                    b.Property<int>("DiseaseInfoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DiseaseInfoId"));
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime");
 
-                    b.Property<string>("DiseaseName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Details")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("DiseaseInfoId");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.ToTable("Diseases");
+                    b.Property<DateTime>("ModifierDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DiseaseInformations");
                 });
 
             modelBuilder.Entity("PatientInfo_API.Models.NDC", b =>
                 {
-                    b.Property<int>("NDCId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NDCId"));
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime");
 
-                    b.Property<string>("NDCName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Details")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("NDCId");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.ToTable("NCDs");
+                    b.Property<DateTime>("ModifierDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NCDs", (string)null);
                 });
 
             modelBuilder.Entity("PatientInfo_API.Models.NDC_Detail", b =>
                 {
-                    b.Property<int>("NDC_DetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NDC_DetailId"));
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime");
 
-                    b.Property<int?>("NDCId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("ModifierDate")
+                        .HasColumnType("datetime");
 
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
+                    b.Property<string>("Ncdid")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("NCDId");
 
-                    b.HasKey("NDC_DetailId");
+                    b.Property<string>("PatientId")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasIndex("NDCId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Ncdid");
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("NCD_Details");
+                    b.ToTable("NCD_Details", (string)null);
                 });
 
             modelBuilder.Entity("PatientInfo_API.Models.Patient", b =>
                 {
-                    b.Property<int>("PatientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientId"));
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime");
 
-                    b.Property<int>("Epilepsy")
-                        .HasColumnType("int");
+                    b.Property<string>("DiseaseId")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("PatientName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Epliepsy")
+                        .HasColumnType("bit");
 
-                    b.HasKey("PatientId");
+                    b.Property<bool>("IsActve")
+                        .HasColumnType("bit");
 
-                    b.ToTable("Patients");
+                    b.Property<DateTime>("ModifierDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiseaseId");
+
+                    b.ToTable("PatientInformations");
                 });
 
             modelBuilder.Entity("PatientInfo_API.Models.Allergy_Detail", b =>
                 {
-                    b.HasOne("PatientInfo_API.Models.Allergy", "Allergy")
-                        .WithMany()
-                        .HasForeignKey("AllergyId");
+                    b.HasOne("PatientInfo_API.Models.Allergy", "Allergie")
+                        .WithMany("AllergiesDetails")
+                        .HasForeignKey("AllergieId")
+                        .HasConstraintName("FK_Allergies_Details_Allergies");
 
                     b.HasOne("PatientInfo_API.Models.Patient", "Patient")
-                        .WithMany("Allergy_Details")
-                        .HasForeignKey("PatientId");
+                        .WithMany("AllergiesDetails")
+                        .HasForeignKey("PatientId")
+                        .HasConstraintName("FK_Allergies_Details_PatientInformations");
 
-                    b.Navigation("Allergy");
+                    b.Navigation("Allergie");
 
                     b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("PatientInfo_API.Models.NDC_Detail", b =>
                 {
-                    b.HasOne("PatientInfo_API.Models.NDC", "NDC")
-                        .WithMany()
-                        .HasForeignKey("NDCId");
+                    b.HasOne("PatientInfo_API.Models.NDC", "Ncd")
+                        .WithMany("NcdDetails")
+                        .HasForeignKey("Ncdid")
+                        .HasConstraintName("FK_NCD_Details_NCDs");
 
                     b.HasOne("PatientInfo_API.Models.Patient", "Patient")
-                        .WithMany("NDC_Details")
-                        .HasForeignKey("PatientId");
+                        .WithMany("NcdDetails")
+                        .HasForeignKey("PatientId")
+                        .HasConstraintName("FK_NCD_Details_PatientInformations");
 
-                    b.Navigation("NDC");
+                    b.Navigation("Ncd");
 
                     b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("PatientInfo_API.Models.Patient", b =>
                 {
-                    b.Navigation("Allergy_Details");
+                    b.HasOne("PatientInfo_API.Models.DiseaseInfo", "Disease")
+                        .WithMany("PatientInformations")
+                        .HasForeignKey("DiseaseId")
+                        .HasConstraintName("FK_PatientInformations_DiseaseInformations");
 
-                    b.Navigation("NDC_Details");
+                    b.Navigation("Disease");
+                });
+
+            modelBuilder.Entity("PatientInfo_API.Models.Allergy", b =>
+                {
+                    b.Navigation("AllergiesDetails");
+                });
+
+            modelBuilder.Entity("PatientInfo_API.Models.DiseaseInfo", b =>
+                {
+                    b.Navigation("PatientInformations");
+                });
+
+            modelBuilder.Entity("PatientInfo_API.Models.NDC", b =>
+                {
+                    b.Navigation("NcdDetails");
+                });
+
+            modelBuilder.Entity("PatientInfo_API.Models.Patient", b =>
+                {
+                    b.Navigation("AllergiesDetails");
+
+                    b.Navigation("NcdDetails");
                 });
 #pragma warning restore 612, 618
         }

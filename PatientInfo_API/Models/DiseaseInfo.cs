@@ -2,7 +2,17 @@
 {
 	public class DiseaseInfo
 	{
-        public int DiseaseInfoId { get; set; }
-        public string DiseaseName { get; set; }
+       
+        public string Id { get; set; } = null!;
+
+        public string Details { get; set; } = null!;
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public DateTime ModifierDate { get; set; }
+
+        public virtual ICollection<Patient> PatientInformations { get; set; } = new List<Patient>();
     }
 }
