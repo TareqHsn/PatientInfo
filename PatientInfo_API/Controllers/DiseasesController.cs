@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PatientInfo_API.Models.DTOs;
 using PatientInfo_API.Models;
 using PatientInfo_API.Services;
 
